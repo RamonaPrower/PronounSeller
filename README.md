@@ -1,2 +1,3 @@
-# DiscordBotShell
- A basic repo to clone to make the shell of a discord bot
+# Pronoun Seller
+ I am going into battle
+ and i require only your strongest pronouns

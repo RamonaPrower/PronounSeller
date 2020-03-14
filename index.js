@@ -10,7 +10,7 @@ const client = new Discord.Client;
 client.messageCommands = new Discord.Collection();
 const messageCommList = commandList.messageCommands;
 for (const file of messageCommList) {
-    client.messageCommands.set(file.settings.regexp, file);
+    client.messageCommands.set(file.settings.tag, file);
 }
 
 // insert message loops here
@@ -18,21 +18,26 @@ for (const file of messageCommList) {
 client.on('message', message => {
     const mentioned = message.mentions.has(client.user);
     if (message.author.bot) return;
+    if (!message.guild) return;
 
-    if (mentioned === true || config.dev === true) {
-        for (const [key, value] of client.messageCommands) {
-            const newReg = key;
-            if (newReg.test(message.content)) {
-                value.execute(message);
-                break;
-            }
+    if (mentioned === true) {
+        const splitArgs = message.content.split(' ');
+        splitArgs.shift();
+        if (splitArgs.length !== 0) {
+            console.log('custom');
+            return;
         }
+        else {
+            client.messageCommands.get('pronouns@').execute(message);
+            return;
+        }
+
     }
 });
 
 // everything after this point doesn't need to be touched normally
 client.on('ready', () => {
-	console.log(`I'm up, and i'm part of ${client.guilds.size} servers`);
+	console.log(`I'm up, and i'm part of ${client.guilds.cache.size} servers`);
 });
 
 client.login(config.token)
