@@ -24,7 +24,7 @@ client.on('message', message => {
         const splitArgs = message.content.split(' ');
         splitArgs.shift();
         if (splitArgs.length !== 0) {
-            console.log('custom');
+            client.messageCommands.get('pronounsArgs').execute(message);
             return;
         }
         else {
