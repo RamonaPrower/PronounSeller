@@ -19,10 +19,10 @@ client.on('message', message => {
     const mentioned = message.mentions.has(client.user);
     if (message.author.bot) return;
     if (!message.guild) return;
+    const splitArgs = message.content.split(' ');
+    const firstArg = splitArgs.shift();
 
-    if (mentioned === true) {
-        const splitArgs = message.content.split(' ');
-        splitArgs.shift();
+    if (mentioned === true && firstArg.includes(client.user.id)) {
         if (splitArgs.length !== 0) {
             client.messageCommands.get('pronounsArgs').execute(message);
             return;
