@@ -6,7 +6,7 @@ module.exports = {
 	async execute(message) {
 		// create welcome message
 		const sentMessage = await message.channel.send(strings.sellerSpeech);
-		const pronounArr = [['🇭', 'he/him'], ['🇸', 'she/her'], ['🇹', 'they/them'], ['🇦', 'any']];
+		const pronounArr = [['🇭', 'he/him'], ['🇸', 'she/her'], ['🇹', 'they/them'], ['🇦', 'any/all']];
 		const pronouns = new Map(pronounArr);
 		// add emojis
 		await Promise.all([
