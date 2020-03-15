@@ -21,11 +21,18 @@ client.on('message', message => {
     if (!message.guild) return;
     const splitArgs = message.content.split(' ');
     const firstArg = splitArgs.shift();
+    const guildMember = message.guild.member(message.author);
 
     if (mentioned === true && firstArg.includes(client.user.id)) {
         if (splitArgs.length !== 0) {
-            client.messageCommands.get('pronounsArgs').execute(message);
-            return;
+            if (guildMember.hasPermission('MANAGE_ROLES') && message.content.includes(' create ')) {
+                client.messageCommands.get('pronounsCreate').execute(message);
+                return;
+            }
+            else {
+                client.messageCommands.get('pronounsArgs').execute(message);
+                return;
+            }
         }
         else {
             client.messageCommands.get('pronouns@').execute(message);

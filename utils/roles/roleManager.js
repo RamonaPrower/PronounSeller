@@ -25,4 +25,25 @@ module.exports = {
         }
         return details;
     },
+    async addRoles(tag, guild) {
+        const details = {
+            tag: tag,
+        };
+        let guildRole = guild.roles.cache.find(r => r.name === tag);
+        const defaultRole = guild.roles.cache.find(r => r.name === '@everyone');
+        if (!guildRole) {
+            guildRole = await guild.roles.create({
+                data: {
+                    name: tag,
+                    permissions: defaultRole.permissions.DEFAULT,
+                },
+                reason: 'Creating ' + tag + 'role.',
+            });
+            details.toggle = 'added';
+        }
+        else {
+            details.toggle = 'exists';
+        }
+        return details;
+    },
 };

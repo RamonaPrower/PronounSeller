@@ -20,7 +20,7 @@ module.exports = {
 			return ['🇭', '🇸', '🇹', '🇦'].includes(reaction.emoji.name) && user.id !== sentMessage.author.id;
 		};
 		// toggle user group based on emoji
-		const collector = sentMessage.createReactionCollector(filter, { time: 25000 });
+		const collector = sentMessage.createReactionCollector(filter, { time: 60000 });
 		collector.on('collect', async (reaction, user) => {
 			const foundPronoun = pronouns.get(reaction.emoji.name);
 			const details = await roleManager.updateRoles(foundPronoun, user.id, message.guild);
@@ -46,9 +46,6 @@ module.exports = {
 			}
 		});
 		// shut up shop once collector finished
-		collector.on('end', async () => {
-			await sentMessage.delete();
-		});
 	},
 };
 
